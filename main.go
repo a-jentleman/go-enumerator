@@ -3,11 +3,11 @@
 //
 // See [README] for more documentation
 //
-// [README]: https://pkg.go.dev/gitlab.com/panicrx/go-enumerator
+// [README]: https://pkg.go.dev/github.com/a-jentleman/go-enumerator
 package main
 
 import (
-	"gitlab.com/panicrx/go-enumerator/internal/cmd"
+	"github.com/a-jentleman/go-enumerator/internal/cmd"
 )
 
 func main() {
