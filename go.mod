@@ -1,4 +1,4 @@
-module gitlab.com/panicrx/go-enumerator
+module github.com/a-jentleman/go-enumerator
 
 go 1.21
 
