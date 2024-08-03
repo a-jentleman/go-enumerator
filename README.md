@@ -14,15 +14,15 @@ but it can be used as a command-line tool as well.
 
 ---
 
-[![Go Reference](https://pkg.go.dev/badge/gitlab.com/panicrx/go-enumerator.svg)](https://pkg.go.dev/gitlab.com/panicrx/go-enumerator) <br />
-Additional documentation available at [pkg.go.dev](https://pkg.go.dev/gitlab.com/panicrx/go-enumerator)
+[![Go Reference](https://pkg.go.dev/badge/gitlab.com/a-jentleman/go-enumerator.svg)](https://pkg.go.dev/gitlab.com/a-jentleman/go-enumerator) <br />
+Additional documentation available at [pkg.go.dev](https://pkg.go.dev/gitlab.com/a-jentleman/go-enumerator)
 
 ## Installation
 
 Installation is easy, just install the package using the `go install` tool.
 
 ```shell
-    go install gitlab.com/panicrx/go-enumerator
+    go install gitlab.com/a-jentleman/go-enumerator
 ```
 
 ## Overview
@@ -79,5 +79,5 @@ used by `encoding/json` and other text-based encoding packages.
 ### Remarks
 
 - `go-enumerator` was inspired by [stringer](https://pkg.go.dev/golang.org/x/tools/cmd/stringer), which is a better `String()` generator. If all you need is a `String()` method for a numeric constant, consider using that tool instead.
-- Examples for how to use the generated code can be found at [https://pkg.go.dev/gitlab.com/panicrx/go-enumerator/example](https://pkg.go.dev/gitlab.com/panicrx/go-enumerator/example)
+- Examples for how to use the generated code can be found at [https://pkg.go.dev/gitlab.com/a-jentleman/go-enumerator/example](https://pkg.go.dev/gitlab.com/a-jentleman/go-enumerator/example)
 - If you find this tool useful, give the repo a star! Feel free leave issues and/or suggest fixes or improvements as well 🙂
