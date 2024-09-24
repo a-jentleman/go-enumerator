@@ -52,7 +52,7 @@ var rootCmd = &cobra.Command{
 	Short: "Generate enum-like code for Go constants",
 	Long: `Generate enum-like code for Go constants. 
 
-go-enumerator is designed to be called by go generate. See https://pkg.go.dev/gitlab.com/panicrx/go-enumerator for usage examples.`,
+go-enumerator is designed to be called by go generate. See https://pkg.go.dev/github.com/a-jentleman/go-enumerator for usage examples.`,
 	RunE: func(cmd *cobra.Command, _ []string) error {
 		cmd.RegisterFlagCompletionFunc("naming-strategy", func(_ *cobra.Command, _ []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 			var ret []string

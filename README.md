@@ -22,7 +22,7 @@ Additional documentation available at [pkg.go.dev](https://pkg.go.dev/github.com
 Installation is easy, just install the package using the `go install` tool.
 
 ```shell
-    go install github.com/a-jentleman/go-enumerator
+go install github.com/a-jentleman/go-enumerator@latest
 ```
 
 ## Overview
