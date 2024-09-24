@@ -51,7 +51,6 @@ go-enumerator is designed to be called by go generate. See https://pkg.go.dev/gi
 		cmd.RegisterFlagCompletionFunc("naming-strategy", func(_ *cobra.Command, _ []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 			var ret []string
 
-			toComplete = normalizeArg(toComplete)
 			if strings.HasPrefix(string(none), toComplete) {
 				ret = append(ret, string(none))
 			}
