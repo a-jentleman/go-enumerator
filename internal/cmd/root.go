@@ -351,10 +351,8 @@ func findConstantsOfType(fset *token.FileSet, info *types.Info, syntax []*ast.Fi
 		name := c.Name()
 		astFile := findAstFileForToken(c.Pos(), syntax)
 		nodes, _ := astutil.PathEnclosingInterval(astFile, c.Pos(), c.Pos())
-		str, lineConst, lineOk := findStringInLineComment(c, nodes, astFile, fset)
-		if lineOk {
-			c = lineConst
-		} else {
+		str := findStringInLineComment(c.Pos(), nodes, astFile, fset)
+		if str == "" {
 			switch namingStrategy {
 			case camelCase:
 				str = strcase.LowerCamelCase(name)
@@ -410,7 +408,7 @@ func findAstFileForToken(pos token.Pos, syntax []*ast.File) *ast.File {
 	return nil
 }
 
-func findStringInLineComment(c *types.Const, nodes []ast.Node, astFile *ast.File, tokenFile *token.FileSet) (string, *types.Const, bool) {
+func findStringInLineComment(pos token.Pos, nodes []ast.Node, astFile *ast.File, tokenFile *token.FileSet) string {
 	for _, node := range nodes {
 		gd, ok := node.(*ast.GenDecl)
 		if !ok {
@@ -424,25 +422,15 @@ func findStringInLineComment(c *types.Const, nodes []ast.Node, astFile *ast.File
 			}
 
 			cgPosition := tokenFile.Position(cgPos)
-			position := tokenFile.Position(c.Pos())
+			position := tokenFile.Position(pos)
 			if cgPosition.Line != position.Line {
 				continue
 			}
 
-			totalText := cg.Text()
-			leftTrimmedText := strings.TrimLeftFunc(totalText, unicode.IsSpace)
-			bothTrimmedText := strings.TrimRightFunc(leftTrimmedText, unicode.IsSpace)
-			if bothTrimmedText == "" {
-				continue
-			}
-
-			pos := token.Pos(int(c.Pos()) + len(totalText) - len(leftTrimmedText))
-			c := types.NewConst(pos, c.Pkg(), c.Name(), c.Type(), constant.MakeString(bothTrimmedText))
-
-			return bothTrimmedText, c, true
+			return strings.TrimSpace(cg.Text())
 		}
 	}
-	return "", nil, false
+	return ""
 }
 
 // sameFile determines if a and b point to the same file
