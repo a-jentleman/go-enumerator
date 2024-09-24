@@ -32,19 +32,13 @@ func Execute() {
 type namingStrategyName string
 
 const (
-	none       namingStrategyName = "none"
-	camelCase  namingStrategyName = "camelCase"
-	pascalCase namingStrategyName = "PascalCase"
-	snakeCase  namingStrategyName = "snake_case"
-	kebabCase  namingStrategyName = "kebab-case"
+	none           namingStrategyName = "none"
+	camelCase      namingStrategyName = "camelCase"
+	pascalCase     namingStrategyName = "PascalCase"
+	snakeCase      namingStrategyName = "snake_case"
+	upperSnakeCase namingStrategyName = "UPPER_SNAKE_CASE"
+	kebabCase      namingStrategyName = "kebab-case"
 )
-
-func normalizeArg(s string) string {
-	s = strings.ToLower(s)
-	s = strings.ReplaceAll(s, "_", "")
-	s = strings.ReplaceAll(s, "-", "")
-	return s
-}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -58,23 +52,27 @@ go-enumerator is designed to be called by go generate. See https://pkg.go.dev/gi
 			var ret []string
 
 			toComplete = normalizeArg(toComplete)
-			if strings.HasPrefix(normalizeArg(string(none)), toComplete) {
+			if strings.HasPrefix(string(none), toComplete) {
 				ret = append(ret, string(none))
 			}
 
-			if strings.HasPrefix(normalizeArg(string(camelCase)), toComplete) {
+			if strings.HasPrefix(string(camelCase), toComplete) {
 				ret = append(ret, string(camelCase))
 			}
 
-			if strings.HasPrefix(normalizeArg(string(pascalCase)), toComplete) {
+			if strings.HasPrefix(string(pascalCase), toComplete) {
 				ret = append(ret, string(pascalCase))
 			}
 
-			if strings.HasPrefix(normalizeArg(string(snakeCase)), toComplete) {
+			if strings.HasPrefix(string(snakeCase), toComplete) {
 				ret = append(ret, string(snakeCase))
 			}
 
-			if strings.HasPrefix(normalizeArg(string(kebabCase)), toComplete) {
+			if strings.HasPrefix(string(upperSnakeCase), toComplete) {
+				ret = append(ret, string(upperSnakeCase))
+			}
+
+			if strings.HasPrefix(string(kebabCase), toComplete) {
 				ret = append(ret, string(kebabCase))
 			}
 
@@ -170,7 +168,7 @@ func init() {
 	fs.StringVarP(&flagType, "type", "t", "", "type name to generate an enum definition for. If not specified, it attempts to find the type using $GOLINE and $GOFILE")
 	fs.StringVarP(&flagReceiver, "receiver", "r", "", "receiver variable name of the generated methods. By default, the first letter of the type if used")
 	fs.IntVarP(&flagLine, "line", "l", 0, "Specify the line to search for types from if a type name is not specified. If not specified, line defaults to the value of $GOLINE which is set by go generate.")
-	fs.StringVarP(&flagNameFunc, "naming-strategy", "n", "none", "Specify a naming strategy to use. Valid choices are: none, camelCase, pascalCase, snakeCase, and kebabCase. The naming strategy will be used when generating names for enum values. This strategy is ignored for values that have a name override specified as a line comment.")
+	fs.StringVarP(&flagNameFunc, "naming-strategy", "n", "none", "Specify a naming strategy to use. Valid choices are: none, camelCase, PascalCase, snake_case, UPPER_SNAKE_CASE, and kebab-case. The naming strategy will be used when generating names for enum values. This strategy is ignored for values that have a name override specified as a line comment.")
 	_ = fs.MarkHidden("line")
 }
 
@@ -365,10 +363,10 @@ func findConstantsOfType(fset *token.FileSet, info *types.Info, syntax []*ast.Fi
 				str = strcase.UpperCamelCase(name)
 			case snakeCase:
 				str = strcase.SnakeCase(name)
+			case upperSnakeCase:
+				str = strcase.UpperSnakeCase(name)
 			case kebabCase:
 				str = strcase.KebabCase(name)
-			case none:
-				fallthrough
 			default:
 				str = name
 			}
