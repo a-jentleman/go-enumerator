@@ -120,7 +120,7 @@ go-enumerator is designed to be called by go generate. See https://pkg.go.dev/gi
 		}
 		receiver = safeIndent(receiver)
 
-		reproCmd := os.Args[0]
+		reproCmd := `go run -mod=mod "github.com/a-jentleman/go-enumerator"`
 		if inputFileName != "" {
 			reproCmd = fmt.Sprintf("%s --input=%q", reproCmd, inputFileName)
 		}
